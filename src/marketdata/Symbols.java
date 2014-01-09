@@ -5,7 +5,6 @@ import java.util.Map;
 
 public class Symbols
 {
-
     private final Map<String, String> mappingCompaniesSymbols = new HashMap<>();
 
     public Symbols()

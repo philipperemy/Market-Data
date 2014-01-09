@@ -9,10 +9,11 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import log.Logger;
 
 public class HttpCall
 {
-
+    protected Logger logger    = Logger.getInstance();
     protected String httpURL   = "";
     protected String suffixURL = "";
 
@@ -23,7 +24,7 @@ public class HttpCall
         do
         {
             exception = false;
-            System.out.println("Performing Http GET Request : " + request);
+            logger.traceINFO("Performing Http GET Request : " + request);
             BufferedReader reader = null;
             try
             {
@@ -33,21 +34,23 @@ public class HttpCall
 
                 reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                 String text;
-                int count = 0;
+                // int count = 0;
 
                 while ((text = reader.readLine()) != null)
                 {
                     list.add(text);
-                    if (count % 100 == 0)
-                    {
-                        System.out.println(count + " lines read from request");
-                    }
-                    count++;
+                    /*
+                     * if (count % 100 == 0)
+                     * {
+                     * logger.traceINFO(count + " lines read from request");
+                     * }
+                     * count++;
+                     */
                 }
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                logger.traceERROR(e.getMessage(), e);
                 exception = true;
             }
             finally
@@ -62,7 +65,7 @@ public class HttpCall
 
     protected String performHttpGetRequestString(String request) throws IOException
     {
-        System.out.println("Performing Http GET Request : " + request);
+        logger.traceINFO("Performing Http GET Request : " + request);
         return getPrice(request);
     }
 
@@ -106,25 +109,15 @@ public class HttpCall
         }
         catch (IOException e)
         {
-            System.out.println("cannot make HTTP Call");
-            e.printStackTrace();
+            logger.traceERROR("Cannot make HTTP Call", e);
         }
         return null;
     }
 
-    public String executeString(String symbol)
+    public String executeString(String symbol) throws IOException
     {
         String request = httpURL + symbol + suffixURL;
-        try
-        {
-            return performHttpGetRequestString(request);
-        }
-        catch (IOException e)
-        {
-            System.out.println("cannot make HTTP Call");
-            e.printStackTrace();
-        }
-        return null;
+        return performHttpGetRequestString(request);
     }
 
 }

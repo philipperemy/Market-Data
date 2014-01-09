@@ -4,11 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import log.Logger;
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 
 public class DatabaseAccess
 {
-
+    private Logger     logger    = Logger.getInstance();
     private Connection connect   = null;
     private Statement  statement = null;
     private ResultSet  resultSet = null;
@@ -21,7 +22,7 @@ public class DatabaseAccess
     public void insertMarketData(String symbol, String price)
     {
         String query = "INSERT INTO `marketdata`.`market_data` (`ID`, `SYMBOL`, `PRICE`, `TIMESTAMP`) VALUES (NULL, '" + symbol + "', '" + price + "', CURRENT_TIMESTAMP);";
-        System.out.println("Inserting ( " + symbol + ", " + price + " )");
+        logger.traceINFO("Inserting ( " + symbol + ", " + price + " )");
         try
         {
             connect.createStatement().execute(query);
@@ -33,23 +34,22 @@ public class DatabaseAccess
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            logger.traceERROR(e);
         }
 
     }
 
-    public void readDataBase()
+    private void readDataBase()
     {
         try
         {
-            System.out.println("Initializing database...");
+            logger.traceINFO("Initializing database...");
             Class.forName("com.mysql.jdbc.Driver");
-
             connect = DriverManager.getConnection("jdbc:mysql://localhost/marketdata?" + "user=root&password=");
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            logger.traceERROR(e);
             System.exit(0);
         }
     }
@@ -75,7 +75,7 @@ public class DatabaseAccess
         }
         catch (Exception e)
         {
-
+            logger.traceERROR(e);
         }
     }
 

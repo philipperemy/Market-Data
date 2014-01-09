@@ -5,35 +5,15 @@ import java.util.Map;
 
 public class MapQuotes
 {
+    private Map<String, String> quotes = new HashMap<>();
 
-    private static Map<String, String> quotesMap = new HashMap<>();
-
-    public static synchronized void put(String symbol, String quote)
+    public synchronized String get(String symbol)
     {
-        quotesMap.put(symbol, quote);
+        return quotes.get(symbol);
     }
 
-    public static synchronized int size()
+    public synchronized void put(String symbol, String quote)
     {
-        return quotesMap.size();
+        quotes.put(symbol, quote);
     }
-
-    public static synchronized void print()
-    {
-        for (String symbol : quotesMap.keySet())
-        {
-            System.out.println("<" + symbol + " ; " + quotesMap.get(symbol) + " >");
-        }
-    }
-
-    public static synchronized void flush()
-    {
-        quotesMap.clear();
-    }
-
-    public static synchronized String get(String symbol)
-    {
-        return quotesMap.get(symbol);
-    }
-
 }

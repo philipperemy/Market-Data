@@ -1,14 +1,14 @@
 package marketdata;
 
 import http.HttpCallAbcBourse;
+import java.io.IOException;
 
 public class MarketDataLayer
 {
+    HttpCallAbcBourse httpCall = new HttpCallAbcBourse();
 
-    public String getLastPricesFromAbcBourse(String symbol)
+    public String getLastPricesFromAbcBourse(String symbol) throws IOException
     {
-        HttpCallAbcBourse httpCall = new HttpCallAbcBourse();
         return httpCall.executeString(symbol);
     }
-
 }
