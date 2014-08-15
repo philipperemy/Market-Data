@@ -10,7 +10,7 @@ import persistence.DatabaseAccess;
 import timer.RealtimeTimer;
 import timer.TimerListener;
 
-public class QuotePoller implements TimerListener
+public class PricePoller implements TimerListener
 {
     private Logger                   logger          = Logger.getInstance();
     public static int                processorsCount = Runtime.getRuntime().availableProcessors();
