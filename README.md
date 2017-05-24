@@ -13,6 +13,7 @@ Module to retrieve realtime stock quotes of Paris stock exchange.
 *Important Notes:*
 
 - By default, the script pulls data from 09:00 to 17:35, every **30sec**.
+- As this script uses your computer time, be sure to be on the Paris Time Zone.
 
 Output example:
 
