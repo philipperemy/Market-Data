@@ -1,4 +1,4 @@
-French Market Data of CAC40
+Realtime Market Data Feed from French CAC40
 ===========
 
 Module to retrieve realtime stock quotes of Paris stock exchange.
@@ -14,7 +14,7 @@ Module to retrieve realtime stock quotes of Paris stock exchange.
 
 - By default, the script pulls data from 09:00 to 17:35, every **30sec**.
 
-Output:
+Output example:
 
 ```
 Wed May 24 16:54:57 JST 2017 [INFO] - start time = Wed May 24 09:00:00 JST 2017
@@ -96,5 +96,7 @@ Wed May 24 16:55:24 JST 2017 [INFO] - Inserting ( BNP, 66.52 )
 Wed May 24 16:55:24 JST 2017 [INFO] - Inserting ( EI, 119.10 )
 Wed May 24 16:55:24 JST 2017 [INFO] - Inserting ( SU, 69.15 )
 Wed May 24 16:55:24 JST 2017 [INFO] - Inserting ( ACA, 14.705 )
-
+Wed May 24 16:55:54 JST 2017 [INFO] - Performing Http GET Request : http://www.boursorama.com/cours.phtml?symbole=1rPBN
+Wed May 24 16:55:54 JST 2017 [INFO] - Performing Http GET Request : http://www.boursorama.com/cours.phtml?symbole=1rPRI
+[...]
 ```
