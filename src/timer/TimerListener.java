@@ -1,6 +1,5 @@
 package timer;
 
-public interface TimerListener
-{
+public interface TimerListener {
     void onTimerTick(RealtimeTimer timeRef);
 }

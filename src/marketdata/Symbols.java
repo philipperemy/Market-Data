@@ -3,17 +3,14 @@ package marketdata;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Symbols
-{
+public class Symbols {
     private final Map<String, String> mappingCompaniesSymbols = new HashMap<>();
 
-    public Symbols()
-    {
+    public Symbols() {
         fillList();
     }
 
-    private void fillList()
-    {
+    private void fillList() {
         mappingCompaniesSymbols.put("Accor", "AC");
         mappingCompaniesSymbols.put("Air Liquide", "AI");
         mappingCompaniesSymbols.put("Alcatel Lucent", "ALU");
@@ -57,13 +54,11 @@ public class Symbols
         // mappingCompaniesSymbols.put("CAC40", "PX1");
     }
 
-    public String getSymbol(String companyName)
-    {
+    public String getSymbol(String companyName) {
         return mappingCompaniesSymbols.get(companyName);
     }
 
-    public Map<String, String> getMapping()
-    {
+    public Map<String, String> getMapping() {
         return mappingCompaniesSymbols;
     }
 }

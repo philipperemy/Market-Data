@@ -1,5 +1,7 @@
 package http;
 
+import log.Logger;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,25 +11,20 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import log.Logger;
 
-public class HttpCall
-{
-    protected Logger logger    = Logger.getInstance();
-    protected String httpURL   = "";
+public class HttpCall {
+    protected Logger logger = Logger.getInstance();
+    protected String httpURL = "";
     protected String suffixURL = "";
 
-    protected List<String> performHttpGetRequest(String request) throws IOException
-    {
+    protected List<String> performHttpGetRequest(String request) throws IOException {
         boolean exception;
         List<String> list = null;
-        do
-        {
+        do {
             exception = false;
             logger.traceINFO("Performing Http GET Request : " + request);
             BufferedReader reader = null;
-            try
-            {
+            try {
                 list = new ArrayList<>();
                 URL url = new URL(request);
                 URLConnection urlConnection = url.openConnection();
@@ -36,8 +33,7 @@ public class HttpCall
                 String text;
                 // int count = 0;
 
-                while ((text = reader.readLine()) != null)
-                {
+                while ((text = reader.readLine()) != null) {
                     list.add(text);
                     /*
                      * if (count % 100 == 0)
@@ -47,14 +43,10 @@ public class HttpCall
                      * count++;
                      */
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 logger.traceERROR(e.getMessage(), e);
                 exception = true;
-            }
-            finally
-            {
+            } finally {
                 reader.close();
             }
         }
@@ -63,30 +55,24 @@ public class HttpCall
         return list;
     }
 
-    protected String performHttpGetRequestString(String request) throws IOException
-    {
+    protected String performHttpGetRequestString(String request) throws IOException {
         logger.traceINFO("Performing Http GET Request : " + request);
         return getPrice(request);
     }
 
-    public String getPrice(String urlPage) throws MalformedURLException, IOException
-    {
+    public String getPrice(String urlPage) throws MalformedURLException, IOException {
         String price = "";
         URLConnection urlConnection = new URL(urlPage).openConnection();
         urlConnection.connect();
         Scanner scanner = new Scanner(urlConnection.getInputStream());
-        while (scanner.hasNextLine())
-        {
+        while (scanner.hasNextLine()) {
             String currentLine = scanner.nextLine();
-            if (currentLine.contains("EUR") && currentLine.contains("cotation"))
-            {
+            if (currentLine.contains("EUR") && currentLine.contains("cotation")) {
                 int idx = currentLine.indexOf("cotation") + "cotation".length();
                 StringBuilder sb = new StringBuilder();
-                for (int i = idx; i < currentLine.length(); i++)
-                {
+                for (int i = idx; i < currentLine.length(); i++) {
                     char c = currentLine.charAt(i);
-                    if (Character.isDigit(c) || c == '.')
-                    {
+                    if (Character.isDigit(c) || c == '.') {
                         sb.append(String.valueOf(c));
                     }
                 }
@@ -100,22 +86,17 @@ public class HttpCall
         return price;
     }
 
-    public List<String> execute(String symbol)
-    {
+    public List<String> execute(String symbol) {
         String request = httpURL + symbol + suffixURL;
-        try
-        {
+        try {
             return performHttpGetRequest(request);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             logger.traceERROR("Cannot make HTTP Call", e);
         }
         return null;
     }
 
-    public String executeString(String symbol) throws IOException
-    {
+    public String executeString(String symbol) throws IOException {
         String request = httpURL + symbol + suffixURL;
         return performHttpGetRequestString(request);
     }
