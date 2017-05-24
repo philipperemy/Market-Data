@@ -9,6 +9,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class DatabaseAccess {
+
+    private static final String PASSWORD = "your_new_password";
+
     private Logger logger = Logger.getInstance();
     private Connection connect = null;
     private Statement statement = null;
@@ -36,13 +39,14 @@ public class DatabaseAccess {
     }
 
     private void readDataBase(boolean init) {
+        String dbUrl = "jdbc:mysql://localhost/marketdata?" + "user=root&password=" + PASSWORD;
         try {
             logger.traceINFO("Initializing database...");
             Class.forName("com.mysql.jdbc.Driver");
-            connect = DriverManager.getConnection("jdbc:mysql://localhost/marketdata?" + "user=root&password=your_new_password");
+            connect = DriverManager.getConnection(dbUrl);
         } catch (Exception e) {
             logger.traceERROR(e);
-            logger.traceERROR("Program did not find a database at jdbc:mysql://localhost/marketdata?" + "user=root&password=your_new_password");
+            logger.traceERROR("Program did not find a database at " + dbUrl);
             dbExist = false;
         }
     }
